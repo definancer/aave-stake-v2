@@ -2,7 +2,7 @@
 pragma solidity 0.7.5;
 pragma experimental ABIEncoderV2;
 
-import {ERC20} from '@aave/aave-token/contracts/open-zeppelin/ERC20.sol';
+import {ERC20} from '../lib/ERC20.sol';
 
 import {IERC20} from '../interfaces/IERC20.sol';
 import {IStakedAave} from '../interfaces/IStakedAave.sol';
@@ -85,7 +85,11 @@ contract StakedTokenV3 is
     string memory symbol,
     uint8 decimals,
     address governance
-  ) public ERC20(name, symbol) AaveDistributionManager(emissionManager, distributionDuration) {
+  )
+    public
+    ERC20(name, symbol, decimals)
+    AaveDistributionManager(emissionManager, distributionDuration)
+  {
     STAKED_TOKEN = stakedToken;
     REWARD_TOKEN = rewardToken;
     COOLDOWN_SECONDS = cooldownSeconds;
@@ -120,9 +124,9 @@ contract StakedTokenV3 is
       )
     );
     if (REVISION == 1) {
-      _name = name;
-      _symbol = symbol;
-      _setupDecimals(decimals);
+      // _name = name;
+      // _symbol = symbol;
+      // _setupDecimals(decimals);
     }
   }
 

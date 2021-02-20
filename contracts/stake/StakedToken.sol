@@ -83,7 +83,7 @@ contract StakedToken is
   ) external initializer {
     _setName(name);
     _setSymbol(symbol);
-    _setDecimals(decimals);
+    _setupDecimals(decimals);
     _setAaveGovernance(aaveGovernance);
   }
 

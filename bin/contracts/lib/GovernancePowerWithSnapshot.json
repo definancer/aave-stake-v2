@@ -1,0 +1,1030 @@
+{
+    "contractName": "GovernancePowerWithSnapshot",
+    "abi": [
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "spender",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Approval",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "delegator",
+                    "type": "address"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "delegatee",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "enum IGovernancePowerDelegationToken.DelegationType",
+                    "name": "delegationType",
+                    "type": "uint8"
+                }
+            ],
+            "name": "DelegateChanged",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "user",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "enum IGovernancePowerDelegationToken.DelegationType",
+                    "name": "delegationType",
+                    "type": "uint8"
+                }
+            ],
+            "name": "DelegatedPowerChanged",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                },
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "to",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Transfer",
+            "type": "event"
+        },
+        {
+            "inputs": [],
+            "name": "DELEGATE_BY_TYPE_TYPEHASH",
+            "outputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "",
+                    "type": "bytes32"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "DELEGATE_TYPEHASH",
+            "outputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "",
+                    "type": "bytes32"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "_aaveGovernance",
+            "outputs": [
+                {
+                    "internalType": "contract ITransferHook",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "_votingSnapshots",
+            "outputs": [
+                {
+                    "internalType": "uint128",
+                    "name": "blockNumber",
+                    "type": "uint128"
+                },
+                {
+                    "internalType": "uint128",
+                    "name": "value",
+                    "type": "uint128"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "name": "_votingSnapshotsCounts",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "spender",
+                    "type": "address"
+                }
+            ],
+            "name": "allowance",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "spender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "approve",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "account",
+                    "type": "address"
+                }
+            ],
+            "name": "balanceOf",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "decimals",
+            "outputs": [
+                {
+                    "internalType": "uint8",
+                    "name": "",
+                    "type": "uint8"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "spender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "subtractedValue",
+                    "type": "uint256"
+                }
+            ],
+            "name": "decreaseAllowance",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "delegatee",
+                    "type": "address"
+                }
+            ],
+            "name": "delegate",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "delegatee",
+                    "type": "address"
+                },
+                {
+                    "internalType": "enum IGovernancePowerDelegationToken.DelegationType",
+                    "name": "delegationType",
+                    "type": "uint8"
+                }
+            ],
+            "name": "delegateByType",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "delegator",
+                    "type": "address"
+                },
+                {
+                    "internalType": "enum IGovernancePowerDelegationToken.DelegationType",
+                    "name": "delegationType",
+                    "type": "uint8"
+                }
+            ],
+            "name": "getDelegateeByType",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "user",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "blockNumber",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "enum IGovernancePowerDelegationToken.DelegationType",
+                    "name": "delegationType",
+                    "type": "uint8"
+                }
+            ],
+            "name": "getPowerAtBlock",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "user",
+                    "type": "address"
+                },
+                {
+                    "internalType": "enum IGovernancePowerDelegationToken.DelegationType",
+                    "name": "delegationType",
+                    "type": "uint8"
+                }
+            ],
+            "name": "getPowerCurrent",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "spender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "addedValue",
+                    "type": "uint256"
+                }
+            ],
+            "name": "increaseAllowance",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "name",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "symbol",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "totalSupply",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "blockNumber",
+                    "type": "uint256"
+                }
+            ],
+            "name": "totalSupplyAt",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "recipient",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "transfer",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "sender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "recipient",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "transferFrom",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }
+    ],
+    "metadata": "{\"compiler\":{\"version\":\"0.7.5+commit.eb77ed08\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"delegator\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"delegatee\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"enum IGovernancePowerDelegationToken.DelegationType\",\"name\":\"delegationType\",\"type\":\"uint8\"}],\"name\":\"DelegateChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"enum IGovernancePowerDelegationToken.DelegationType\",\"name\":\"delegationType\",\"type\":\"uint8\"}],\"name\":\"DelegatedPowerChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"DELEGATE_BY_TYPE_TYPEHASH\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"DELEGATE_TYPEHASH\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"_aaveGovernance\",\"outputs\":[{\"internalType\":\"contract ITransferHook\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"_votingSnapshots\",\"outputs\":[{\"internalType\":\"uint128\",\"name\":\"blockNumber\",\"type\":\"uint128\"},{\"internalType\":\"uint128\",\"name\":\"value\",\"type\":\"uint128\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"_votingSnapshotsCounts\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"}],\"name\":\"allowance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"subtractedValue\",\"type\":\"uint256\"}],\"name\":\"decreaseAllowance\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"delegatee\",\"type\":\"address\"}],\"name\":\"delegate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"delegatee\",\"type\":\"address\"},{\"internalType\":\"enum IGovernancePowerDelegationToken.DelegationType\",\"name\":\"delegationType\",\"type\":\"uint8\"}],\"name\":\"delegateByType\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"delegator\",\"type\":\"address\"},{\"internalType\":\"enum IGovernancePowerDelegationToken.DelegationType\",\"name\":\"delegationType\",\"type\":\"uint8\"}],\"name\":\"getDelegateeByType\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"blockNumber\",\"type\":\"uint256\"},{\"internalType\":\"enum IGovernancePowerDelegationToken.DelegationType\",\"name\":\"delegationType\",\"type\":\"uint8\"}],\"name\":\"getPowerAtBlock\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"enum IGovernancePowerDelegationToken.DelegationType\",\"name\":\"delegationType\",\"type\":\"uint8\"}],\"name\":\"getPowerCurrent\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"addedValue\",\"type\":\"uint256\"}],\"name\":\"increaseAllowance\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"totalSupplyAt\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"Aave*\",\"kind\":\"dev\",\"methods\":{\"allowance(address,address)\":{\"details\":\"See {IERC20-allowance}.\"},\"approve(address,uint256)\":{\"details\":\"See {IERC20-approve}. Requirements: - `spender` cannot be the zero address.\"},\"balanceOf(address)\":{\"details\":\"See {IERC20-balanceOf}.\"},\"decimals()\":{\"details\":\"Returns the number of decimals used to get its user representation. For example, if `decimals` equals `2`, a balance of `505` tokens should be displayed to a user as `5,05` (`505 / 10 ** 2`). Tokens usually opt for a value of 18, imitating the relationship between Ether and Wei. This is the value {ERC20} uses, unless {_setupDecimals} is called. NOTE: This information is only used for _display_ purposes: it in no way affects any of the arithmetic of the contract, including {IERC20-balanceOf} and {IERC20-transfer}.\"},\"decreaseAllowance(address,uint256)\":{\"details\":\"Atomically decreases the allowance granted to `spender` by the caller. This is an alternative to {approve} that can be used as a mitigation for problems described in {IERC20-approve}. Emits an {Approval} event indicating the updated allowance. Requirements: - `spender` cannot be the zero address. - `spender` must have allowance for the caller of at least `subtractedValue`.\"},\"delegate(address)\":{\"details\":\"delegates all the powers to a specific user\",\"params\":{\"delegatee\":\"the user to which the power will be delegated*\"}},\"delegateByType(address,uint8)\":{\"details\":\"delegates one specific power to a delegatee\",\"params\":{\"delegatee\":\"the user which delegated power has changed\",\"delegationType\":\"the type of delegation (VOTING_POWER, PROPOSITION_POWER)*\"}},\"getDelegateeByType(address,uint8)\":{\"details\":\"returns the delegatee of an user\",\"params\":{\"delegator\":\"the address of the delegator*\"}},\"getPowerAtBlock(address,uint256,uint8)\":{\"details\":\"returns the delegated power of a user at a certain block\",\"params\":{\"user\":\"the user*\"}},\"getPowerCurrent(address,uint8)\":{\"details\":\"returns the current delegated power of a user. The current power is the power delegated at the time of the last snapshot\",\"params\":{\"user\":\"the user*\"}},\"increaseAllowance(address,uint256)\":{\"details\":\"Atomically increases the allowance granted to `spender` by the caller. This is an alternative to {approve} that can be used as a mitigation for problems described in {IERC20-approve}. Emits an {Approval} event indicating the updated allowance. Requirements: - `spender` cannot be the zero address.\"},\"name()\":{\"details\":\"Returns the name of the token.\"},\"symbol()\":{\"details\":\"Returns the symbol of the token, usually a shorter version of the name.\"},\"totalSupply()\":{\"details\":\"See {IERC20-totalSupply}.\"},\"totalSupplyAt(uint256)\":{\"details\":\"returns the total supply at a certain block number used by the voting strategy contracts to calculate the total votes needed for threshold/quorum In this initial implementation with no AAVE minting, simply returns the current supply A snapshots mapping will need to be added in case a mint function is added to the AAVE token in the future*\"},\"transfer(address,uint256)\":{\"details\":\"See {IERC20-transfer}. Requirements: - `recipient` cannot be the zero address. - the caller must have a balance of at least `amount`.\"},\"transferFrom(address,address,uint256)\":{\"details\":\"See {IERC20-transferFrom}. Emits an {Approval} event indicating the updated allowance. This is not required by the EIP. See the note at the beginning of {ERC20}; Requirements: - `sender` and `recipient` cannot be the zero address. - `sender` must have a balance of at least `amount`. - the caller must have allowance for ``sender``'s tokens of at least `amount`.\"}},\"stateVariables\":{\"_aaveGovernance\":{\"details\":\"reference to the Aave governance contract to call (if initialized) on _beforeTokenTransfer !!! IMPORTANT The Aave governance is considered a trustable contract, being its responsibility to control all potential reentrancies by calling back the this contract\"},\"_votingSnapshots\":{\"details\":\"The following storage layout points to the prior StakedToken.sol implementation: _snapshots => _votingSnapshots _snapshotsCounts =>  _votingSnapshotsCounts _aaveGovernance => _aaveGovernance\"}},\"title\":\"ERC20WithSnapshot\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"DELEGATE_BY_TYPE_TYPEHASH()\":{\"notice\":\"The EIP-712 typehash for the delegation struct used by the contract\"}},\"notice\":\"ERC20 including snapshots of balances on transfer-related actions\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/liyu/github/defi/aave/aave-stake-v2/contracts/lib/GovernancePowerWithSnapshot.sol\":\"GovernancePowerWithSnapshot\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/liyu/github/defi/aave/aave-stake-v2/contracts/interfaces/IERC20.sol\":{\"keccak256\":\"0x150506e2e40dc3cea841fe0ade6021b9b0d4e09f7616d312bc7c1300a2d7a94f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d3dbf854f310f20a48cd727e1680067f4d911a4c6d220886935736297a0f89cb\",\"dweb:/ipfs/QmU8xN2AYrURFgmB4hLFLamc7aJe6VD5qkUEcfdrKPcz9C\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/contracts/interfaces/IERC20Detailed.sol\":{\"keccak256\":\"0x7c5310c66f68c2e72afcafbdaa4e2d8dce9b3bdaab553274ddf96a597ed863ef\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://1d2a2669083cf8d02ff24a87b0888fdc73d95e73eb8af2ce171b6e8f2adb7abd\",\"dweb:/ipfs/QmVXH85ZbpVVumSB1fj6KsSBGArYYxdccZ4FtdsYjqZXRw\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/contracts/interfaces/ITransferHook.sol\":{\"keccak256\":\"0x1e060af926104d5750b18ab3594b65ec354c14022f35acf06cf109f2f5e91908\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://5e74594a17a84c08ae58d8f36b8ac1d554c20c0e9001e0e538e69d518d9d7b8e\",\"dweb:/ipfs/QmbjxjCYHGcAJYy33uzRc8MeJGJaDF7DcTBc7NgnzxpYNZ\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/contracts/lib/Context.sol\":{\"keccak256\":\"0xb4df619dd013c574e0d5188bd1f52908898745703bc055e07e88f90b0fba6601\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a0fae4421ac8a9b0a2569e0b9e2225ae6f592c1d9e8035ab490ec11c530eb6db\",\"dweb:/ipfs/QmRVSY8bj6XoYxDMn3CU8CUyNCmXHigDvkYBMUFKrgNwUf\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/contracts/lib/ERC20.sol\":{\"keccak256\":\"0x3308bb3d8d3c5076d4db352fe8c994506ac813e45a44acb121980097f8153996\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://6c2fcf6dc52db34b16a542cae2f0269fea8bb6cf492664b02c0af2f0991c62bd\",\"dweb:/ipfs/QmbkzeBwfcgTe77sdGKdfsjwd2GChHnGgDbJ73RGnMid6E\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/contracts/lib/GovernancePowerWithSnapshot.sol\":{\"keccak256\":\"0xf122b9991e681194bbed39e1bba41725a1e4da555c6ed5457dd7a178c3bd239a\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://2fdc2d5979015db9bcefeb7cd876f4b52dcd357c9fc828cd2feed75ed71b0c7e\",\"dweb:/ipfs/QmW8RB49v3D6E2yjFsGcMRLwYoPV7Ta98SMEMoFVgt7LQy\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/contracts/lib/SafeMath.sol\":{\"keccak256\":\"0xf32a71745588178f5f64b96e7766589e48d5402c4679b3c04085760f9437f00b\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://b05078f9fefe539e3252f8f8c2ffbd50f5106787bccf533a7ad5f7d0c3ff77d2\",\"dweb:/ipfs/QmTXQkKZCmWv8nF7iK1Mwa7AVJzkzfL4AkZvJY2Qx4wXd2\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/node_modules/@aave/aave-token/contracts/interfaces/IERC20.sol\":{\"keccak256\":\"0x388d7e22e4455851ae9d1309dabf9e01ff6849128ef607e89389b7cf8fe4df1d\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://6e8db75cc490f3a85bd8ef8b9419284831183777d36643f100a15c1c35a92d6d\",\"dweb:/ipfs/QmTz6RiRprnq58sA7fShW8w3ttyBzCXVHjCNyGbgNxkcWx\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/node_modules/@aave/aave-token/contracts/interfaces/IGovernancePowerDelegationToken.sol\":{\"keccak256\":\"0x82d63f935980041a1fa0cd3a166d5b26695f114214a6e26c01dbd9df4c17400b\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://1506147deb29ca91625cf636b369435ca37667788715d2a051d330debce15d8f\",\"dweb:/ipfs/QmVfnRdbemRkLXaGJyHRH3v41sWy7wJ3r6QKpbw3kzjdhm\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/node_modules/@aave/aave-token/contracts/open-zeppelin/Address.sol\":{\"keccak256\":\"0xc19932d20c723586b172a7f30d47b1696bd15daf0a0ebfe61519c90ab0d830ca\",\"urls\":[\"bzz-raw://d7d668a3725d635f007cd07ab715b77af94236eadecb57d657c839768907f0d7\",\"dweb:/ipfs/QmeuCqynaCrQA1Fyj1pZZp2irfnqeMAwmxapcTTsotsHB9\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/node_modules/@aave/aave-token/contracts/open-zeppelin/Context.sol\":{\"keccak256\":\"0x9cb4309084f3282a5d21c242396eef9cc756180ba06e54eebfa5c447770df160\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://63ed2e7f493fb37258ef05e0c41caf4e90ec7243aa849ff87c2d410f582a6daa\",\"dweb:/ipfs/QmQcMz5FX8NtAS1XzSRQFfDtmJ4yMeQBruyJYDVkzp1Caj\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/node_modules/@aave/aave-token/contracts/open-zeppelin/ERC20.sol\":{\"keccak256\":\"0x291b3f5f85cf723a515eccae8471ac99b93817d8d8f7151a5a99e13c09587e33\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cede3dcb3d9092e0403b642dd0e9aef6201db7d092f74942ef10af7ed5fded3a\",\"dweb:/ipfs/QmZfq8nfwtK5UPkdtsiNd2YN4tgP4tjTFseovXYnoBdtwK\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/node_modules/@aave/aave-token/contracts/open-zeppelin/SafeMath.sol\":{\"keccak256\":\"0x7cbc3384eb31fefce484ce5307dde0096f894d590d5b00b977a1a5a8682bb78f\",\"urls\":[\"bzz-raw://1161469d027aed0e99de03200c04129880d7c70c81d2db92b8cb5e58d6f6d609\",\"dweb:/ipfs/QmSq13hRxU4NNBg9wLpdQ14ur6fzcGcG2riySmJmKQwEjP\"]},\"/Users/liyu/github/defi/aave/aave-stake-v2/node_modules/@aave/aave-token/contracts/token/base/GovernancePowerDelegationERC20.sol\":{\"keccak256\":\"0x866ad035070a7ec3551303a27b2089b372cb4ac393c985d6896678cad8be6662\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://e52b240543b4f791851754edf51dd3f2bb94ea0b4f6ce04f6afbedd79822b1d8\",\"dweb:/ipfs/QmeSpsabSmU2R1FpmSbmhibQA8gjv4zGoQ5zKuqDyUcmdE\"]}},\"version\":1}",
+    "bytecode": "",
+    "deployedBytecode": "",
+    "sourceMap": "",
+    "deployedSourceMap": "",
+    "sourcePath": "/Users/liyu/github/defi/aave/aave-stake-v2/contracts/lib/GovernancePowerWithSnapshot.sol",
+    "compiler": {
+        "name": "solc",
+        "version": "0.7.5+commit.eb77ed08"
+    },
+    "ast": {
+        "absolutePath": "/Users/liyu/github/defi/aave/aave-stake-v2/contracts/lib/GovernancePowerWithSnapshot.sol",
+        "exportedSymbols": {
+            "ERC20": [
+                664
+            ],
+            "GovernancePowerDelegationERC20": [
+                2536
+            ],
+            "GovernancePowerWithSnapshot": [
+                705
+            ],
+            "ITransferHook": [
+                112
+            ],
+            "SafeMath": [
+                901
+            ]
+        },
+        "id": 706,
+        "license": "agpl-3.0",
+        "nodeType": "SourceUnit",
+        "nodes": [
+            {
+                "id": 666,
+                "literals": [
+                    "solidity",
+                    "0.7",
+                    ".5"
+                ],
+                "nodeType": "PragmaDirective",
+                "src": "37:22:5"
+            },
+            {
+                "absolutePath": "/Users/liyu/github/defi/aave/aave-stake-v2/contracts/lib/ERC20.sol",
+                "file": "../lib/ERC20.sol",
+                "id": 668,
+                "nodeType": "ImportDirective",
+                "scope": 706,
+                "sourceUnit": 665,
+                "src": "61:39:5",
+                "symbolAliases": [
+                    {
+                        "foreign": {
+                            "id": 667,
+                            "name": "ERC20",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "src": "69:5:5",
+                            "typeDescriptions": {}
+                        }
+                    }
+                ],
+                "unitAlias": ""
+            },
+            {
+                "absolutePath": "/Users/liyu/github/defi/aave/aave-stake-v2/contracts/interfaces/ITransferHook.sol",
+                "file": "../interfaces/ITransferHook.sol",
+                "id": 670,
+                "nodeType": "ImportDirective",
+                "scope": 706,
+                "sourceUnit": 113,
+                "src": "101:62:5",
+                "symbolAliases": [
+                    {
+                        "foreign": {
+                            "id": 669,
+                            "name": "ITransferHook",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "src": "109:13:5",
+                            "typeDescriptions": {}
+                        }
+                    }
+                ],
+                "unitAlias": ""
+            },
+            {
+                "absolutePath": "/Users/liyu/github/defi/aave/aave-stake-v2/contracts/lib/SafeMath.sol",
+                "file": "../lib/SafeMath.sol",
+                "id": 672,
+                "nodeType": "ImportDirective",
+                "scope": 706,
+                "sourceUnit": 902,
+                "src": "164:45:5",
+                "symbolAliases": [
+                    {
+                        "foreign": {
+                            "id": 671,
+                            "name": "SafeMath",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "src": "172:8:5",
+                            "typeDescriptions": {}
+                        }
+                    }
+                ],
+                "unitAlias": ""
+            },
+            {
+                "absolutePath": "/Users/liyu/github/defi/aave/aave-stake-v2/node_modules/@aave/aave-token/contracts/token/base/GovernancePowerDelegationERC20.sol",
+                "file": "/Users/liyu/github/defi/aave/aave-stake-v2/node_modules/@aave/aave-token/contracts/token/base/GovernancePowerDelegationERC20.sol",
+                "id": 674,
+                "nodeType": "ImportDirective",
+                "scope": 706,
+                "sourceUnit": 2537,
+                "src": "210:180:5",
+                "symbolAliases": [
+                    {
+                        "foreign": {
+                            "id": 673,
+                            "name": "GovernancePowerDelegationERC20",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "src": "221:30:5",
+                            "typeDescriptions": {}
+                        }
+                    }
+                ],
+                "unitAlias": ""
+            },
+            {
+                "abstract": true,
+                "baseContracts": [
+                    {
+                        "baseName": {
+                            "id": 676,
+                            "name": "GovernancePowerDelegationERC20",
+                            "nodeType": "UserDefinedTypeName",
+                            "referencedDeclaration": 2536,
+                            "src": "571:30:5",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_GovernancePowerDelegationERC20_$2536",
+                                "typeString": "contract GovernancePowerDelegationERC20"
+                            }
+                        },
+                        "id": 677,
+                        "nodeType": "InheritanceSpecifier",
+                        "src": "571:30:5"
+                    }
+                ],
+                "contractDependencies": [
+                    979,
+                    1057,
+                    1144,
+                    1651,
+                    2536
+                ],
+                "contractKind": "contract",
+                "documentation": {
+                    "id": 675,
+                    "nodeType": "StructuredDocumentation",
+                    "src": "392:129:5",
+                    "text": " @title ERC20WithSnapshot\n @notice ERC20 including snapshots of balances on transfer-related actions\n @author Aave*"
+                },
+                "fullyImplemented": false,
+                "id": 705,
+                "linearizedBaseContracts": [
+                    705,
+                    2536,
+                    1057,
+                    1651,
+                    979,
+                    1144
+                ],
+                "name": "GovernancePowerWithSnapshot",
+                "nodeType": "ContractDefinition",
+                "nodes": [
+                    {
+                        "id": 680,
+                        "libraryName": {
+                            "id": 678,
+                            "name": "SafeMath",
+                            "nodeType": "UserDefinedTypeName",
+                            "referencedDeclaration": 901,
+                            "src": "612:8:5",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_SafeMath_$901",
+                                "typeString": "library SafeMath"
+                            }
+                        },
+                        "nodeType": "UsingForDirective",
+                        "src": "606:27:5",
+                        "typeName": {
+                            "id": 679,
+                            "name": "uint256",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "625:7:5",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                            }
+                        }
+                    },
+                    {
+                        "constant": false,
+                        "documentation": {
+                            "id": 681,
+                            "nodeType": "StructuredDocumentation",
+                            "src": "637:225:5",
+                            "text": " @dev The following storage layout points to the prior StakedToken.sol implementation:\n _snapshots => _votingSnapshots\n _snapshotsCounts =>  _votingSnapshotsCounts\n _aaveGovernance => _aaveGovernance"
+                        },
+                        "functionSelector": "5b3cc0cf",
+                        "id": 687,
+                        "mutability": "mutable",
+                        "name": "_votingSnapshots",
+                        "nodeType": "VariableDeclaration",
+                        "scope": 705,
+                        "src": "865:72:5",
+                        "stateVariable": true,
+                        "storageLocation": "default",
+                        "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint256_$_t_struct$_Snapshot_$1879_storage_$_$",
+                            "typeString": "mapping(address => mapping(uint256 => struct GovernancePowerDelegationERC20.Snapshot))"
+                        },
+                        "typeName": {
+                            "id": 686,
+                            "keyType": {
+                                "id": 682,
+                                "name": "address",
+                                "nodeType": "ElementaryTypeName",
+                                "src": "873:7:5",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_address",
+                                    "typeString": "address"
+                                }
+                            },
+                            "nodeType": "Mapping",
+                            "src": "865:48:5",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_uint256_$_t_struct$_Snapshot_$1879_storage_$_$",
+                                "typeString": "mapping(address => mapping(uint256 => struct GovernancePowerDelegationERC20.Snapshot))"
+                            },
+                            "valueType": {
+                                "id": 685,
+                                "keyType": {
+                                    "id": 683,
+                                    "name": "uint256",
+                                    "nodeType": "ElementaryTypeName",
+                                    "src": "892:7:5",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_uint256",
+                                        "typeString": "uint256"
+                                    }
+                                },
+                                "nodeType": "Mapping",
+                                "src": "884:28:5",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Snapshot_$1879_storage_$",
+                                    "typeString": "mapping(uint256 => struct GovernancePowerDelegationERC20.Snapshot)"
+                                },
+                                "valueType": {
+                                    "id": 684,
+                                    "name": "Snapshot",
+                                    "nodeType": "UserDefinedTypeName",
+                                    "referencedDeclaration": 1879,
+                                    "src": "903:8:5",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_Snapshot_$1879_storage_ptr",
+                                        "typeString": "struct GovernancePowerDelegationERC20.Snapshot"
+                                    }
+                                }
+                            }
+                        },
+                        "visibility": "public"
+                    },
+                    {
+                        "constant": false,
+                        "functionSelector": "7bb73c97",
+                        "id": 691,
+                        "mutability": "mutable",
+                        "name": "_votingSnapshotsCounts",
+                        "nodeType": "VariableDeclaration",
+                        "scope": 705,
+                        "src": "941:57:5",
+                        "stateVariable": true,
+                        "storageLocation": "default",
+                        "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                            "typeString": "mapping(address => uint256)"
+                        },
+                        "typeName": {
+                            "id": 690,
+                            "keyType": {
+                                "id": 688,
+                                "name": "address",
+                                "nodeType": "ElementaryTypeName",
+                                "src": "949:7:5",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_address",
+                                    "typeString": "address"
+                                }
+                            },
+                            "nodeType": "Mapping",
+                            "src": "941:27:5",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                                "typeString": "mapping(address => uint256)"
+                            },
+                            "valueType": {
+                                "id": 689,
+                                "name": "uint256",
+                                "nodeType": "ElementaryTypeName",
+                                "src": "960:7:5",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                }
+                            }
+                        },
+                        "visibility": "public"
+                    },
+                    {
+                        "constant": false,
+                        "documentation": {
+                            "id": 692,
+                            "nodeType": "StructuredDocumentation",
+                            "src": "1003:278:5",
+                            "text": "@dev reference to the Aave governance contract to call (if initialized) on _beforeTokenTransfer\n !!! IMPORTANT The Aave governance is considered a trustable contract, being its responsibility\n to control all potential reentrancies by calling back the this contract"
+                        },
+                        "functionSelector": "c3863ada",
+                        "id": 694,
+                        "mutability": "mutable",
+                        "name": "_aaveGovernance",
+                        "nodeType": "VariableDeclaration",
+                        "scope": 705,
+                        "src": "1284:36:5",
+                        "stateVariable": true,
+                        "storageLocation": "default",
+                        "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_ITransferHook_$112",
+                            "typeString": "contract ITransferHook"
+                        },
+                        "typeName": {
+                            "id": 693,
+                            "name": "ITransferHook",
+                            "nodeType": "UserDefinedTypeName",
+                            "referencedDeclaration": 112,
+                            "src": "1284:13:5",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_ITransferHook_$112",
+                                "typeString": "contract ITransferHook"
+                            }
+                        },
+                        "visibility": "public"
+                    },
+                    {
+                        "body": {
+                            "id": 703,
+                            "nodeType": "Block",
+                            "src": "1400:43:5",
+                            "statements": [
+                                {
+                                    "expression": {
+                                        "id": 701,
+                                        "isConstant": false,
+                                        "isLValue": false,
+                                        "isPure": false,
+                                        "lValueRequested": false,
+                                        "leftHandSide": {
+                                            "id": 699,
+                                            "name": "_aaveGovernance",
+                                            "nodeType": "Identifier",
+                                            "overloadedDeclarations": [],
+                                            "referencedDeclaration": 694,
+                                            "src": "1406:15:5",
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_contract$_ITransferHook_$112",
+                                                "typeString": "contract ITransferHook"
+                                            }
+                                        },
+                                        "nodeType": "Assignment",
+                                        "operator": "=",
+                                        "rightHandSide": {
+                                            "id": 700,
+                                            "name": "aaveGovernance",
+                                            "nodeType": "Identifier",
+                                            "overloadedDeclarations": [],
+                                            "referencedDeclaration": 696,
+                                            "src": "1424:14:5",
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_contract$_ITransferHook_$112",
+                                                "typeString": "contract ITransferHook"
+                                            }
+                                        },
+                                        "src": "1406:32:5",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_contract$_ITransferHook_$112",
+                                            "typeString": "contract ITransferHook"
+                                        }
+                                    },
+                                    "id": 702,
+                                    "nodeType": "ExpressionStatement",
+                                    "src": "1406:32:5"
+                                }
+                            ]
+                        },
+                        "id": 704,
+                        "implemented": true,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "_setAaveGovernance",
+                        "nodeType": "FunctionDefinition",
+                        "parameters": {
+                            "id": 697,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 696,
+                                    "mutability": "mutable",
+                                    "name": "aaveGovernance",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 704,
+                                    "src": "1353:28:5",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_contract$_ITransferHook_$112",
+                                        "typeString": "contract ITransferHook"
+                                    },
+                                    "typeName": {
+                                        "id": 695,
+                                        "name": "ITransferHook",
+                                        "nodeType": "UserDefinedTypeName",
+                                        "referencedDeclaration": 112,
+                                        "src": "1353:13:5",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_contract$_ITransferHook_$112",
+                                            "typeString": "contract ITransferHook"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1352:30:5"
+                        },
+                        "returnParameters": {
+                            "id": 698,
+                            "nodeType": "ParameterList",
+                            "parameters": [],
+                            "src": "1400:0:5"
+                        },
+                        "scope": 705,
+                        "src": "1325:118:5",
+                        "stateMutability": "nonpayable",
+                        "virtual": true,
+                        "visibility": "internal"
+                    }
+                ],
+                "scope": 706,
+                "src": "522:923:5"
+            }
+        ],
+        "src": "37:1409:5"
+    },
+    "functionHashes": {
+        "DELEGATE_BY_TYPE_TYPEHASH()": "aa9fbe02",
+        "DELEGATE_TYPEHASH()": "41cbf54a",
+        "_aaveGovernance()": "c3863ada",
+        "_votingSnapshots(address,uint256)": "5b3cc0cf",
+        "_votingSnapshotsCounts(address)": "7bb73c97",
+        "allowance(address,address)": "dd62ed3e",
+        "approve(address,uint256)": "095ea7b3",
+        "balanceOf(address)": "70a08231",
+        "decimals()": "313ce567",
+        "decreaseAllowance(address,uint256)": "a457c2d7",
+        "delegate(address)": "5c19a95c",
+        "delegateByType(address,uint8)": "dc937e1c",
+        "getDelegateeByType(address,uint8)": "6f50458d",
+        "getPowerAtBlock(address,uint256,uint8)": "c2ffbb91",
+        "getPowerCurrent(address,uint8)": "b2f4201d",
+        "increaseAllowance(address,uint256)": "39509351",
+        "name()": "06fdde03",
+        "symbol()": "95d89b41",
+        "totalSupply()": "18160ddd",
+        "totalSupplyAt(uint256)": "981b24d0",
+        "transfer(address,uint256)": "a9059cbb",
+        "transferFrom(address,address,uint256)": "23b872dd"
+    },
+    "gasEstimates": null
+}

@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: agpl-3.0
 pragma solidity 0.7.5;
 
-import {ERC20} from '../lib/ERC20.sol';
+import {ERC20} from './ERC20.sol';
 import {ITransferHook} from '../interfaces/ITransferHook.sol';
-import {SafeMath} from '../lib/SafeMath.sol';
-import {
-  GovernancePowerDelegationERC20
-} from '@aave/aave-token/contracts/token/base/GovernancePowerDelegationERC20.sol';
+import {SafeMath} from './SafeMath.sol';
+import {GovernancePowerDelegationERC20} from './GovernancePowerDelegationERC20.sol';
 
 /**
  * @title ERC20WithSnapshot

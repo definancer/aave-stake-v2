@@ -212,7 +212,7 @@ contract ERC20 is Context, IERC20, IERC20Detailed {
     _symbol = newSymbol;
   }
 
-  function _setDecimals(uint8 newDecimals) internal {
+  function _setupDecimals(uint8 newDecimals) internal {
     _decimals = newDecimals;
   }
 
