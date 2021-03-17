@@ -18,6 +18,8 @@ import { checkVerification } from '../../helpers/etherscan-verification';
 
 const { StakedAave, StakedAaveImpl } = eContractid;
 
+const log = console.log;
+
 task(`deploy-${StakedAave}`, `Deploys the ${StakedAave} contract`)
   .addFlag('verify', 'Verify StakedAave contract via Etherscan API.')
   .addOptionalParam(
@@ -39,9 +41,12 @@ task(`deploy-${StakedAave}`, `Deploys the ${StakedAave} contract`)
 
     const network = localBRE.network.name as eEthereumNetwork;
 
-    console.log(`\n- ${StakedAave} deployment`);
+    //
 
-    console.log(`\tDeploying ${StakedAave} implementation ...`);
+    log(`\n- ${StakedAave} deployment`);
+
+    log(`\tDeploying ${StakedAave} implementation ...`);
+
     const stakedAaveImpl = await deployStakedAave(
       [
         aaveAddress || getAaveTokenPerNetwork(network),
@@ -54,6 +59,7 @@ task(`deploy-${StakedAave}`, `Deploys the ${StakedAave} contract`)
       ],
       false // disable verify due not supported by current buidler etherscan plugin
     );
+
     await stakedAaveImpl.deployTransaction.wait();
     await registerContractInJsonDb(StakedAaveImpl, stakedAaveImpl);
 

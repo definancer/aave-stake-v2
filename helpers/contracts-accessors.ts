@@ -22,6 +22,8 @@ import { zeroAddress } from 'ethereumjs-util';
 import { ZERO_ADDRESS } from './constants';
 import { Signer } from 'ethers';
 
+const log = console.log;
+
 export const deployStakedAave = async (
   [
     stakedToken,
@@ -52,6 +54,7 @@ export const deployStakedAave = async (
     emissionManager,
     distributionDuration,
   ];
+
   const instance = await deployContract<StakedAave>(id, args);
   if (verify) {
     await verifyContract(instance.address, args);

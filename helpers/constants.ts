@@ -110,7 +110,7 @@ export const getAaveIncentivesVaultPerNetwork = (network: eEthereumNetwork): tEt
   getParamPerNetwork<tEthereumAddress>(
     {
       [eEthereumNetwork.coverage]: '',
-      [eEthereumNetwork.hardhat]: '',
+      [eEthereumNetwork.hardhat]: ZERO_ADDRESS,
       [eEthereumNetwork.kovan]: '',
       [eEthereumNetwork.ropsten]: '',
       [eEthereumNetwork.main]: '0x253f7b06c1d60c1fbbc9d82c301327eb86e3ba81',

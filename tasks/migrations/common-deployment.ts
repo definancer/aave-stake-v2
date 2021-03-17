@@ -5,6 +5,8 @@ import { eContractid, eEthereumNetwork } from '../../helpers/types';
 import { checkVerification } from '../../helpers/etherscan-verification';
 import { getAaveAdminPerNetwork } from '../../helpers/constants';
 
+let log = console.log;
+
 task('common-deployment', 'Deployment in for Main, Kovan and Ropsten networks')
   .addFlag('verify', 'Verify StakedAave and InitializableAdminUpgradeabilityProxy contract.')
   .addOptionalParam(
@@ -14,6 +16,7 @@ task('common-deployment', 'Deployment in for Main, Kovan and Ropsten networks')
   .addOptionalParam('aaveAddress', 'Use AaveToken address by param instead of configuration.')
   .setAction(async ({ verify, vaultAddress, aaveAddress }, localBRE) => {
     const DRE: HardhatRuntimeEnvironment = await localBRE.run('set-dre');
+
     const network = DRE.network.name as eEthereumNetwork;
     const aaveAdmin = getAaveAdminPerNetwork(network);
 
